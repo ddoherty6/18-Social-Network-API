@@ -1,6 +1,8 @@
 # Social-Network-API
 
 update/write controllers for user and thought routes
+ -add friend. need to actually update the database and not the locally pulled information
+
 
 update dateFormat so that it is not a complete stolen property
 

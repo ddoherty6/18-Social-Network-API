@@ -1,9 +1,16 @@
 const { Thought, User } = require('../models');
 
 const thoughtController = {
+  //get all thoughts
+  getAllThoughts() {
+    Thought.find({})
+      .then(dbThoughts => res.json(dbThoughts))
+      .catch(err => res.sendStatus(500));
+  },
+  // get one thought
+  getThoughtById(){},
   // add thought to user
   createThought({ params, body }, res) {
-    console.log(params);
     Thought.create(body)
       .then(({ _id }) => {
         return User.findOneAndUpdate(
@@ -22,26 +29,10 @@ const thoughtController = {
       })
       .catch(err => res.json(err));
   },
-
-  // add reaction to thought
-  createReaction({ params, body }, res) {
-    Thought.findOneAndUpdate(
-      { _id: params.thoughtId },
-      { $push: { replies: body } },
-      { new: true, runValidators: true }
-    )
-      .then(dbUserData => {
-        if (!dbUserData) {
-          res.status(404).json({ message: 'No user found with this id!' });
-          return;
-        }
-        res.json(dbUserData);
-      })
-      .catch(err => res.json(err));
-  },
-
+  //update thought
+  updateThought(){},
   // delete thought
-  removeComment({ params }, res) {
+  deleteThought({ params }, res) {
     Comment.findOneAndDelete({ _id: params.commentId })
       .then(deletedThought => {
         if (!deletedThought) {
@@ -62,7 +53,30 @@ const thoughtController = {
       })
       .catch(err => res.json(err));
   },
-  // remove reaction
+
+
+  /////
+  ////////// REACTIONS ///////////
+  /////
+
+
+  // add reaction to thought
+  createReaction({ params, body }, res) {
+    Thought.findOneAndUpdate(
+      { _id: params.thoughtId },
+      { $push: { replies: body } },
+      { new: true, runValidators: true }
+    )
+      .then(dbUserData => {
+        if (!dbUserData) {
+          res.status(404).json({ message: 'No user found with this id!' });
+          return;
+        }
+        res.json(dbUserData);
+      })
+      .catch(err => res.json(err));
+  },
+  // delete reaction
   deleteReaction({ params }, res) {
     Thought.findOneAndUpdate(
       { _id: params.thoughtId },
