@@ -54,38 +54,34 @@ const userController = {
 
     User.find({ _id: [params.userId, params.friendId] })
       .then(dbUserData => {
-        dbUserData[0].friends.push(dbUserData[1]);
-        dbUserData[0].save();
-        res.json(dbUserData[0]);
-      });
-    //check if user exists
-    // if (!dbUserData) {
-    //   res.status(404).json({ message: 'No user found???? :(' });
-    //   return;
-    // }
-    // //check that friend is not already added
-    // for (let i = 0; i < dbUserData.friends.length; i++) {
-    //   if (dbUserData.friends[i] === params.friendId) {
-    //     res.status(400).json({ message: "Friend already added" });
-    //     return;
-    //   }
-    // }
-    // // add friendId to user's friends array
-    // dbUserData.friends.push(params.friendId);
-    // add new info to database
+        //  dbUserData[1] is user, dbUserData[0] is friend
+        // check that friend is not already added
+        for (let i = 0; i < dbUserData[1].friends.length; i++) {
+          if (dbUserData[1].friends[i]._id == params.friendId) {
+            res.status(400).json({ message: "Friend already added" });
+            return;
+          }
+        }
+        // add friend
+        dbUserData[1].friends.push(dbUserData[0]);
+        dbUserData[1].save();
+        res.json(dbUserData[1]);
+      })
+      .catch(err => res.json(err));
   },
 
   removeFriend({ params }, res){
     User.findOne({ _id: params.userId })
       .then(dbUserData => {
         if (!dbUserData) { //check if user exists
-          res.status(404).json({ message: 'No user found???? :(' });
+          res.status(404).json({ message: 'No user found' });
           return;
         }
-
-        for (let i = 0; i < dbUserData.friends.length; i++) { //check that friend is not already added
-          if (dbUserData.friends[i] === params.friendId) {
+        //check that friend is there for removal
+        for (let i = 0; i < dbUserData.friends.length; i++) {
+          if (dbUserData.friends[i]._id == params.friendId) {
             dbUserData.friends.splice(i, 1);
+            dbUserData.save();
             res.json(dbUserData);
             return;
           }
