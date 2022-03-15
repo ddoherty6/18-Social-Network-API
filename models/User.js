@@ -33,7 +33,7 @@ const UserSchema = new Schema(
       virtuals: true,
       getters: true
     },
-    // prevents virtuals from creating duplicate of _id as `id`
+    // prevents virtuals from creating redundancy of _id as `id`
     id: false
   }
 );

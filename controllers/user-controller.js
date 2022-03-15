@@ -1,5 +1,6 @@
 const { User } = require('../models');
 
+
 const userController = {
   // get all users
   getAllUsers(req, res) {
@@ -41,11 +42,13 @@ const userController = {
       .catch(err => res.json(err));
   },
 
-  // delete user // BONUS REMOVE A USER'S THOUGHTS UPON DELETE
+  // delete user 
   deleteUser({ params }, res) {
+    
     User.findOneAndDelete({ _id: params.id })
-      .then(dbUserData => res.json(dbUserData))
-      .catch(err => res.json(err));
+    .then(dbUserData => res.json(dbUserData))
+    .catch(err => res.json(err));
+
   },
 
   //// FRIENDS ////////////

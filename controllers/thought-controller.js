@@ -7,12 +7,14 @@ const thoughtController = {
       .then(dbThoughts => res.json(dbThoughts))
       .catch(err => res.sendStatus(500));
   },
+
   // get one thought
   getThoughtById({ params }, res){
     Thought.findById({_id: params.id})
     .then(dbThought => res.json(dbThought))
     .catch(err => res.json(err));
   },
+
   // add thought to user - 
   createThought({ params, body }, res) {
     Thought.create(body) // create thought
@@ -32,6 +34,7 @@ const thoughtController = {
       })
       .catch(err => res.json(err));
   },
+
   //update thought
   //params.id is thought _id ; body contains new thoughtText
   updateThought({ params, body }, res) {
@@ -39,6 +42,7 @@ const thoughtController = {
     .then(dbThought => res.json(dbThought))
     .catch(err => res.json(err));
   },
+  
   // delete thought
   // params.id is thought _id
   deleteThought({ params }, res) {
