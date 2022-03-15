@@ -15,9 +15,13 @@ const thoughtController = {
     .catch(err => res.json(err));
   },
 
-  // add thought to user - 
+  // add thought to user - body contains thoughtText, username; params.id = userId
   createThought({ params, body }, res) {
-    Thought.create(body) // create thought
+    Thought.create({
+        thoughtText: body.thoughtText,
+        username: body.username,
+        userId: params.id
+      }) // create thought
       .then(({ _id }) => {
         return User.findOneAndUpdate( // add thought to user
           { _id: params.id },

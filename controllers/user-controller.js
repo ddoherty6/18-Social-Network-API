@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Thought } = require('../models');
 
 
 const userController = {
@@ -42,11 +42,21 @@ const userController = {
       .catch(err => res.json(err));
   },
 
-  // delete user 
+  // delete user //// BONUS - UPON DELETE USER, FIND AND DELETE USER'S ASSOCATED THOUGHTS
   deleteUser({ params }, res) {
     
     User.findOneAndDelete({ _id: params.id })
-    .then(dbUserData => res.json(dbUserData))
+    .then(dbUserData => {
+      // find and delete thoughts associated with user's userId
+      Thought.deleteMany(
+        {
+          userId: dbUserData._id
+        }
+      )
+      .then(deletedCount => {
+        res.json(Object.assign(dbUserData, deletedCount));
+      });
+    })
     .catch(err => res.json(err));
 
   },
