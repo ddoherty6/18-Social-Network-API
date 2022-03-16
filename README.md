@@ -1,14 +1,17 @@
 # Social-Network-API
 
-readme
-
-video
-
 doublecheck
 
 This application reperesents the database side of a social networking application. There are two main components: users and thoughts. Within thoughts, there is functionality for reactions - as in, reactions to thoughts. Please see the following videos for an in-depth look at installation and use of this back-end product:
 
-[](link to video)
+[Install](https://watch.screencastify.com/v/XRiuR0CXecSyJrgO4Ja5)
+
+[Demo 1](https://watch.screencastify.com/v/twvDEomoSRU7S3BneLP6)
+
+[Demo 2](https://watch.screencastify.com/v/k6y1saRTjeun6b8HFDmp)
+
+[Demo 3](https://watch.screencastify.com/v/vfyASZGf3G9NosEV2QoL)
+
 
 ## Installation
 
@@ -46,3 +49,7 @@ Reactions consist of custom primary key `reactionId`, the content of the reactio
 ## Dependencies
 
 This backend runs on node, and uses ExpressJS for the server, MongoDB for database via Mongoose as the ODM, and MomentJS to format the timestamps.
+
+## Collaboration
+
+Please reach out to me at ddoherty6@gmail.com if you would like access to the repository for collaboration.
